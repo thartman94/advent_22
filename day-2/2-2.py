@@ -1,11 +1,11 @@
 import functools
 
 """ 
-            Opponent    Me
-Rock        A           X
-Paper       B           Y
-Scissors    C           Z
- """
+Opponent        Result
+A   Rock        X   Lose
+B   Paper       Y   Draw
+C   Scissors    Z   Win
+"""
 
 hand_scores = {
     "Rock": 1,
@@ -14,30 +14,29 @@ hand_scores = {
 }
 
 outcome_scores = {
-    "Loss": 0,
+    "Lose": 0,
     "Draw": 3,
     "Win": 6,
 }
 
-outcomes = {
-    "Rock": {"Rock": "Draw", "Paper": "Loss", "Scissors": "Win"},
-    "Paper": {"Rock": "Win", "Paper": "Draw", "Scissors": "Loss"},
-    "Scissors": {"Rock": "Loss", "Paper": "Win", "Scissors": "Draw"},
+response = {
+    "Lose": {"Rock": "Scissors", "Paper": "Rock", "Scissors": "Paper"},
+    "Draw": {"Rock": "Rock", "Paper": "Paper", "Scissors": "Scissors"},
+    "Win": {"Rock": "Paper", "Paper": "Scissors", "Scissors": "Rock"},
 }
 
-hands = {"A": "Rock", "X": "Rock", "B": "Paper", "Y": "Paper", "C": "Scissors", "Z": "Scissors"}
+translate = {"A": "Rock", "B": "Paper", "C": "Scissors", "X": "Lose", "Y": "Draw", "Z": "Win"}
 
-file = open("./input-2.txt")
-lines = file.readlines()
-file.close()
+with open("./input-2.txt") as file:
+    lines = file.readlines()
 
 
 def score_line(line):
-    opp = hands[line[0]]
-    me = hands[line[2]]
-    return outcome_scores[outcomes[me][opp]] + hand_scores[me]
+    opp = translate[line[0]]
+    outcome = translate[line[2]]
+    me = response[outcome][opp]
+    return outcome_scores[outcome] + hand_scores[me]
 
 
 total = functools.reduce(lambda total, line: total + score_line(line), lines, 0)
-
 print(total)

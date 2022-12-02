@@ -27,9 +27,8 @@ outcomes = {
 
 hands = {"A": "Rock", "X": "Rock", "B": "Paper", "Y": "Paper", "C": "Scissors", "Z": "Scissors"}
 
-file = open("./input-2.txt")
-lines = file.readlines()
-file.close()
+with open("./input-2.txt") as file:
+    lines = file.readlines()
 
 
 def score_line(line):
