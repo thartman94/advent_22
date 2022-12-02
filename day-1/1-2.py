@@ -11,10 +11,8 @@ def insert(current_cal):
         return
     for i, val in enumerate(max_cals):
         if current_cal > val:
-            max_cals.insert(i, current_cal)
-            return
-        if i == 2:
-            return
+            max_cals[i] = current_cal
+            break
 
 
 for line in file.readlines():
@@ -26,6 +24,6 @@ for line in file.readlines():
 
 file.close()
 
-total = functools.reduce(lambda a, b: a + b, max_cals[0:3])
+total = functools.reduce(lambda a, b: a + b, max_cals)
 print(max_cals)
 print(total)
